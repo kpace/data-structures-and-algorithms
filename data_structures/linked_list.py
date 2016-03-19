@@ -81,3 +81,33 @@ class LList(object):
             front = front.next
             current = current.next
         return current.data
+
+    def partition(self, x):
+        """
+        Partition the list around a value x, such that all elements less than
+        x come before it, all nodes greater than or equal come after it.
+        """
+        self.pop(x)
+        current = self.__first
+        smaller_first = smaller_last = None
+        greater_first = greater_last = None
+
+        while current:
+            if current.data < x:
+                if smaller_first is None:
+                    smaller_first = smaller_last = LList.Node(current.data)
+                else:
+                    smaller_last.next = LList.Node(current.data)
+                    smaller_last = smaller_last.next
+            else:
+                if greater_first is None:
+                    greater_first = greater_last = LList.Node(current.data)
+                else:
+                    greater_last.next = LList.Node(current.data)
+                    greater_last = greater_last.next
+            current = current.next
+        if smaller_last is None:
+            self.__first = LList.Node(x, greater_first)
+        else:
+            smaller_last.next = LList.Node(x, greater_first)
+            self.__first = smaller_first
