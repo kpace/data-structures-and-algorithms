@@ -58,3 +58,15 @@ class LList(object):
                 return res
             else:
                 return None
+
+    def remove_duplicates(self):
+        current = self.__first
+        while current:
+            runner = current
+            while runner.next:
+                if runner.next.data == current.data:
+                    runner.next = runner.next.next
+                    self.__length -= 1
+                else:
+                    runner = runner.next
+            current = current.next
