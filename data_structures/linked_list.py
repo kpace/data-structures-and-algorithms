@@ -70,3 +70,14 @@ class LList(object):
                 else:
                     runner = runner.next
             current = current.next
+
+    def kth_to_last(self, k):
+        """ Returns the kth to last element. """
+        current = front = self.__first
+        for _ in range(k):
+            front = front.next
+
+        while front.next:
+            front = front.next
+            current = current.next
+        return current.data
