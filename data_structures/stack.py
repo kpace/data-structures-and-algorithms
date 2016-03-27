@@ -1,25 +1,27 @@
 class Stack(object):
-    """ Stack implementation """
+    """ "Linked" Stack implementation """
 
     class Node(object):
         def __init__(self, data, next=None):
             self.data = data
             self.next = next
 
-    top = None
-
-    def empty(self):
-        return not self.top
+    __top = None
 
     def push(self, d):
-        self.top = Stack.Node(d, self.top)
+        self.__top = Stack.Node(d, self.__top)
 
     def pop(self):
-        if not self.empty():
-            d = self.top.data
-            self.top = self.top.next
-            return d
+        if self.empty():
+            raise ValueError("Stack is empty")
+        d = self.__top.data
+        self.__top = self.__top.next
+        return d
 
     def peek(self):
-        if not self.empty():
-            return self.top.data
+        if self.empty():
+            raise ValueError("Stack is empty")
+        return self.__top.data
+
+    def empty(self):
+        return not self.__top
