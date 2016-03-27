@@ -1,4 +1,5 @@
 class LList(object):
+    """ Singly linked list implementation """
     class Node(object):
         def __init__(self, data, next=None):
             self.data = data
@@ -111,3 +112,38 @@ class LList(object):
         else:
             smaller_last.next = LList.Node(x, greater_first)
             self.__first = smaller_first
+
+    def beginning_of_cycle(self):
+        """
+            Returns the first element of cycle, if there is such,
+            otherwise returns None.
+        """
+        slow = fast = self.__first
+        while slow.next and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                # cycle found
+                # point slow to the first and move both pointers
+                # at equal pace until they meet
+                slow = self.__first
+                while slow != fast:
+                    slow = slow.next
+                    fast = fast.next
+                return fast.data
+        return None
+
+    def is_palindrome(self):
+        st = []
+        p = self.__first
+        while p:
+            st.append(p.data)
+            p = p.next
+
+        p = self.__first
+        m = len(st) / 2
+        while len(st) >= m:  # iterate only through half of the stack
+            if p.data != st.pop():
+                return False
+            p = p.next
+        return True
