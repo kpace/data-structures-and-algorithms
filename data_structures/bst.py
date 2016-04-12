@@ -22,12 +22,14 @@ class BinarySearchTree:
             return self.parent and not self.is_left_child()
 
     __root = None
+    __length = 0
 
     def add(self, key, data):
         if self.__root is None:
             self.__root = BinarySearchTree.Node(key, data)
         else:
             self._add(key, data, self.__root)
+        self.__length += 1
 
     def _add(self, key, data, current):
         if key < current.key:
@@ -83,6 +85,7 @@ class BinarySearchTree:
                 to_remove.key = right_min.key
                 to_remove.data = right_min.data
                 self._remove(right_min)
+            self.__length -= 1
 
     def _remove(self, to_remove):
         if to_remove.child_count() == 0:
@@ -109,7 +112,12 @@ class BinarySearchTree:
     def __delitem__(self, key):
         self.delete(key)
 
+    def __len__(self):
+        return self.__length
+
 t = BinarySearchTree()
+
+assert len(t) == 0
 
 t.add(4, 'a')
 t.add(15, 'b')
@@ -118,11 +126,14 @@ t.add(6, 'd')
 t.add(13, 'e')
 t.add(48, 'f')
 t.add(2, 'g')
+t.add(4, 'g')
+
+assert len(t) == 8
 
 t.delete(15)
 t.delete(2)
 assert 15 not in t
 assert 2 not in t
-
+assert len(t) == 6
 
 t.pre_order()
