@@ -106,6 +106,18 @@ class BinarySearchTree:
         else:
             return current
 
+    def depth(self):
+        return self._depth(0, self.__root)
+
+    def _depth(self, cnt, current):
+        if current:
+            d1 = self._depth(cnt + 1, current.left)
+            d2 = self._depth(cnt + 1, current.right)
+        else:
+            return cnt
+
+        return d1 if d1 > d2 else d2
+
     def __contains__(self, key):
         return self._get(key, self.__root)
 
@@ -126,14 +138,14 @@ t.add(6, 'd')
 t.add(13, 'e')
 t.add(48, 'f')
 t.add(2, 'g')
-t.add(4, 'g')
 
-assert len(t) == 8
+assert t.depth() == 4
+assert len(t) == 7
 
 t.delete(15)
 t.delete(2)
 assert 15 not in t
 assert 2 not in t
-assert len(t) == 6
+assert len(t) == 5
 
 t.pre_order()
