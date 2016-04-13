@@ -43,7 +43,7 @@ class BinarySearchTree:
             else:
                 self._add(key, data, current.right)
 
-    def pre_order(self):
+    def in_order(self):
         def _rec(current):
             if current.left:
                 _rec(current.left)
@@ -154,4 +154,4 @@ assert 15 not in t
 assert 2 not in t
 assert len(t) == 5
 
-t.pre_order()
+t.in_order()
