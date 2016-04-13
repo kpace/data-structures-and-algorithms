@@ -109,6 +109,11 @@ class BinarySearchTree:
     def depth(self):
         return self._depth(0, self.__root)
 
+    def is_balanced(self):
+        dl = self._depth(0, self.__root.left)
+        dr = self._depth(0, self.__root.right)
+        return abs(dl - dr) <= 1
+
     def _depth(self, cnt, current):
         if current:
             d1 = self._depth(cnt + 1, current.left)
@@ -140,6 +145,7 @@ t.add(48, 'f')
 t.add(2, 'g')
 
 assert t.depth() == 4
+assert t.is_balanced() == False
 assert len(t) == 7
 
 t.delete(15)
