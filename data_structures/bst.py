@@ -21,6 +21,24 @@ class BinarySearchTree:
         def is_right_child(self):
             return self.parent and not self.is_left_child()
 
+        def children(self):
+            return [c for c in (self.left, self.right) if c is not None]
+
+        def __repr__(self):
+            return 'key:%s,\tvalue:%s' % (str(self.key), str(self.data))
+
+        def __eq__(self, other):
+            if isinstance(other, BinarySearchTree.Node):
+                return self.key == other.key and self.data == other.data
+            else:
+                return False
+
+        def __ne__(self, other):
+            return not self.__eq__(other)
+
+        def __hash__(self):
+            return hash(self.__repr__())
+
     __root = None
     __length = 0
 
@@ -37,11 +55,13 @@ class BinarySearchTree:
                 current.left = BinarySearchTree.Node(key, data, parent=current)
             else:
                 self._add(key, data, current.left)
-        else:
+        elif key > current.key:
             if current.right is None:
                 current.right = BinarySearchTree.Node(key, data, parent=current)
             else:
                 self._add(key, data, current.right)
+        else:
+            current.data = data
 
     def in_order(self):
         def _rec(current):
@@ -55,6 +75,22 @@ class BinarySearchTree:
 
         if self.__root:
             _rec(self.__root)
+
+    def bfs(self):
+        if self.__root:
+            visited = set()
+            from data_structures import queue
+            q = queue.Queue()
+            q.enqueue(self.__root)
+
+            while not q.empty():
+                curr = q.dequeue()
+                if curr.key not in visited:
+                    print('key:%s,\tvalue:%s' % (str(curr.key), str(curr.data)))
+                    visited.add(curr.key)
+                    for c in curr.children():
+                        if c not in visited:
+                            q.enqueue(c)
 
     def get(self, key):
         res = self._get(key, self.__root)
@@ -134,24 +170,15 @@ class BinarySearchTree:
 
 t = BinarySearchTree()
 
-assert len(t) == 0
-
 t.add(4, 'a')
 t.add(15, 'b')
 t.add(32, 'c')
 t.add(6, 'd')
 t.add(13, 'e')
 t.add(48, 'f')
-t.add(2, 'g')
-
-assert t.depth() == 4
-assert t.is_balanced() == False
-assert len(t) == 7
-
-t.delete(15)
-t.delete(2)
-assert 15 not in t
-assert 2 not in t
-assert len(t) == 5
+t.add(2, 'A')
+t.add(2, 'B')
 
 t.in_order()
+print('--------------------------------')
+t.bfs()
