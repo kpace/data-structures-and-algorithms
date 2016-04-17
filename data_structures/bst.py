@@ -145,11 +145,6 @@ class BinarySearchTree:
     def depth(self):
         return self._depth(0, self.__root)
 
-    def is_balanced(self):
-        dl = self._depth(0, self.__root.left)
-        dr = self._depth(0, self.__root.right)
-        return abs(dl - dr) <= 1
-
     def _depth(self, cnt, current):
         if current:
             d1 = self._depth(cnt + 1, current.left)
@@ -159,6 +154,26 @@ class BinarySearchTree:
 
         return d1 if d1 > d2 else d2
 
+    def is_balanced(self):
+        if self._check_balanced(self.__root) == -1:
+            return False
+        else:
+            return True
+
+    def _check_balanced(self, current):
+        if current is None:
+            return 0
+
+        l_depth = self._check_balanced(current.left)
+        if l_depth == -1:
+            return -1
+        r_depth = self._check_balanced(current.right)
+        if r_depth == -1:
+            return -1
+
+        diff = abs(l_depth - r_depth)
+        return -1 if diff > 1 else max([l_depth, r_depth]) + 1
+
     def __contains__(self, key):
         return self._get(key, self.__root)
 
@@ -167,18 +182,3 @@ class BinarySearchTree:
 
     def __len__(self):
         return self.__length
-
-t = BinarySearchTree()
-
-t.add(4, 'a')
-t.add(15, 'b')
-t.add(32, 'c')
-t.add(6, 'd')
-t.add(13, 'e')
-t.add(48, 'f')
-t.add(2, 'A')
-t.add(2, 'B')
-
-t.in_order()
-print('--------------------------------')
-t.bfs()
