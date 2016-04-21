@@ -12,6 +12,12 @@ class LList(object):
     def __len__(self):
         return self.__length
 
+    def __iter__(self):
+        current = self.__first
+        while current is not None:
+            yield current.data
+            current = current.next
+
     def empty(self):
         return not self.__first
 
