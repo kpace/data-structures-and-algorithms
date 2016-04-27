@@ -5,8 +5,8 @@ class Stack(object):
         def __init__(self, data, next=None):
             self.data = data
             self.next = next
-
-    __top = None
+    def __init__(self):
+        self.__top = None
 
     def push(self, d):
         self.__top = Stack.Node(d, self.__top)

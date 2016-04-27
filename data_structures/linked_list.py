@@ -6,8 +6,9 @@ class LList(object):
             self.data = data
             self.next = next
 
-    __first = None
-    __length = 0
+    def __init__(self):
+        self.__first = None
+        self.__length = 0
 
     def __len__(self):
         return self.__length

@@ -39,8 +39,9 @@ class BinarySearchTree:
         def __hash__(self):
             return hash(self.__repr__())
 
-    __root = None
-    __length = 0
+    def __init__(self):
+        self.__root = None
+        self.__length = 0
 
     def add(self, key, data):
         if self.__root is None:

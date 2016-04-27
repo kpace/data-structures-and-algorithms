@@ -6,8 +6,9 @@ class Queue(object):
             self.data = data
             self.next = next
 
-    __first = None
-    __last = None
+    def __init__(self):
+        self.__first = None
+        self.__last = None
 
     def enqueue(self, d):
         if self.empty():
